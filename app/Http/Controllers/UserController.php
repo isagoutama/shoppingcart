@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Auth;
 
 class UserController extends Controller
 {
@@ -22,12 +23,30 @@ class UserController extends Controller
     	]);
     	$user = new User([
     		'email' => $r->input('email'),
+        'role' => 'costumer',
     		'name' => $r->input('name'),
     		'username' => $r->input('username'),
     		'alamat' => $r->input('alamat'),
     		'password' => bcrypt($r->input('password'))
     	]);
     	$user->save();
+      Auth::login($user);
     	return redirect('/');
+    }
+    public function getLogin(){
+      return view('user.login');
+    }
+    public function postLogin(Request $r){
+      $this->validate($r,[
+        'email' => 'email|required',
+        'password' => 'required|min:7'
+      ]);
+      if(Auth::attempt(['email' => $r->input('email'),'password' => $r->input('password')])){
+        return view('user.profile');
+      }
+    }
+    public function logout(){
+      Auth::logout();
+      return redirect('/user/login');
     }
 }

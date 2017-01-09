@@ -3,25 +3,30 @@
 Shopping Cart
 @endsection
 @section('content')
-<div class="grid">
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <img src="{{ url('img/try.jpg') }}" alt="..." class="img-responsive">
-      <div class="caption">
-        <h3>Magnum Ice Cream</h3>
-        <p class="descript">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <hr>
-        <div class="pull-left price"><sup>Rp.</sup>15.000 </div>
-        <div class="clearfix">
-        <p><a href="#" class="btn btn-success pull-right" role="button">Keranjang Belanja</a></p>
+  @foreach ($produk->chunk(3) as $produkChunk)
+    <div class="row">
+      @foreach ($produkChunk as $produk)
+        <div class="col-sm-6 col-md-4">
+          <div class="thumbnail">
+            <img src="{{ url('img/'.$produk->image) }}" alt="{{ $produk->title }}">
+            <div class="caption">
+              <h3>{{ $produk->title }}</h3>
+              <p class="descript">{{ $produk->deskripsi }}</p>
+              <div class="clearfix">
+                <div class="pull-left price">
+                  <sup>Rp.</sup>{{ $produk->harga }}
+                </div>
+                @if (Auth::check())
+                  <a href="{{ url('add-to-cart/'.$produk->id) }}" class="btn btn-success pull-right" role="button">Keranjang Belanja</a>
+                @else
+                  <a href="/user/login" class="btn btn-success pull-right" role="button">Login</a>
+                @endif
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      @endforeach
     </div>
-  </div>
-</div>
+  @endforeach
+
 @endsection

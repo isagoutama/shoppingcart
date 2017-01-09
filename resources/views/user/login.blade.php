@@ -5,7 +5,7 @@ Daftar
 @section('content')
 	<div class="row">
 		<div class="col-md-4 col-md-offset-4">
-			<h1>Daftar</h1>
+			<h1>Masuk</h1>
 			@if(count($errors)>0)
 			<div class="alert alert-danger">
 				@foreach($errors->all() as $error)
@@ -13,7 +13,7 @@ Daftar
 				@endforeach
 			</div>
 			@endif
-			<form action="" method="post">
+			<form action="{{ url('/user/login') }}" method="post">
 			{!! csrf_field() !!}
 				<div class="form-group">
 					<label for="email">E-Mail</label>
@@ -23,6 +23,6 @@ Daftar
 					<label for="password">Password</label>
 					<input type="password" name="password" id="password" class="form-control">
 				</div>
+				<button class="btn btn-primary">Masuk</button>
 
 	@endsection
-@endsection

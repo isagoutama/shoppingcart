@@ -13,7 +13,7 @@ Daftar
 				@endforeach
 			</div>
 			@endif
-			<form action="{{ url('/register') }}" method="post">
+			<form action="{{ url('/user/register') }}" method="post">
 			{!! csrf_field() !!}
 				<div class="form-group">
 					<label for="email">E-Mail</label>
@@ -21,7 +21,7 @@ Daftar
 				</div>
 				<div class="form-group">
 					<label for="username">Username</label>
-					<input type="text" name="username" id="email" class="form-control">
+					<input type="text" name="username" id="username" class="form-control" required>
 				</div>
 				<div class="form-group">
 					<label for="username">Nama Lengkap</label>
@@ -39,7 +39,7 @@ Daftar
         </div> --}}
 				<div class="form-group">
 					<label for="email">Alamat</label>
-					<textarea type="text" name="alamat" class="form-control"></textarea>
+					<textarea type="text" name="alamat" rows="5" id="comment" class="form-control"></textarea>
 
 				</div>
 				<div class="form-group">
@@ -55,8 +55,12 @@ Daftar
 		</div>
 	</div>
 	@section('script')
-	<script type="text/javascript">
-		$("#phone").mask("(999) 999-9999");
-	</script>
+		<script type="text/javascript">
+		   function validateForm(){
+		        var text = this.getElementById('username').value;
+		        text = text.split(' '); //we split the string in an array of strings using     whitespace as separator
+		        return (text.length == 1); //true when there is only one word, false else.
+		    }
+		</script>
 	@endsection
 @endsection
